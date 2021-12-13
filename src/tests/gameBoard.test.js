@@ -69,4 +69,11 @@ describe("Battleship GameBoard", () => {
     testBoard.receiveAttack([1,0]);
     expect(testBoard.checkIfAllShipsSunk()).toBe(true)
   })
+  it("doesn't allow the same ship to be placed twice", () => {
+    testBoard.placeShip(0, [0,0], true)
+    testBoard.placeShip(0, [5,5], true)
+    testArr[0][0] = { ship: 0 };
+    testArr[1][0] = { ship: 0 };
+    expect(testBoard.gameBoard).toMatchObject(testArr);
+  })
 });
