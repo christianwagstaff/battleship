@@ -1,7 +1,10 @@
 import createShip from "./ships";
 const shipGuide = {
-  1: createShip(1, "Test"),
-  2: createShip(2, "Patrol Boat")
+  0: createShip(2, "Patrol Boat"),
+  1: createShip(3, "Submarine"),
+  2: createShip(3, "Destroyer"),
+  3: createShip(4, "Battleship"),
+  4: createShip(5, "Carrier"),
 };
 
 export class GameBoard {
@@ -20,19 +23,72 @@ export class GameBoard {
     }
     return board;
   }
+  _willFitOnBoard(cords, isVertical, shipSize) {
+    let [x, y] = cords;
+    let finalLocation = isVertical ? x + shipSize : y + shipSize;
+    if (finalLocation > 10) {
+      return false;
+    }
+    return true;
+  }
+
+  _isSpaceAvailable(cords, isVertical, shipSize) {
+    let [x, y] = cords;
+    let finalLocation = isVertical ? x + shipSize : y + shipSize;
+    if (isVertical) {
+      for (let i = x; i < finalLocation; i++) {
+        if (this.gameBoard[i][y].ship !== null) {
+          console.log("No Space Available");
+          return false;
+        }
+      }
+    } else {
+      for (let i = y; i < finalLocation; i++) {
+        if (this.gameBoard[x][i].ship !== null) {
+          console.log("No Space Available");
+          return false;
+        }
+      }
+    }
+    return true;
+  }
   placeShip(shipNumber, cords, isVertical) {
     let [x, y] = cords;
     let ship = shipGuide[shipNumber];
     let shipSize = ship.size;
-    this.gameBoard[x][y].ship = ship.name;;
+    let finalLocation = isVertical ? x + shipSize : y + shipSize;
+    if (!this._willFitOnBoard(cords, isVertical, shipSize)) {
+      return;
+    }
+    if (!this._isSpaceAvailable(cords, isVertical, shipSize)) {
+      return;
+    }
     if (isVertical) {
-      for (let i = x; i < x + shipSize; i++) {
-          this.gameBoard[i][y].ship = shipNumber;
+      //   finalLocation = x + shipSize;
+      for (let i = x; i < finalLocation; i++) {
+        this.gameBoard[i][y].ship = shipNumber;
       }
     } else {
-        for (let i = y; i < y + shipSize; i++) {
-            this.gameBoard[x][i].ship = shipNumber;
-        }
+      //   finalLocation = y + shipSize;
+      for (let i = y; i < finalLocation; i++) {
+        this.gameBoard[x][i].ship = shipNumber;
+      }
     }
+  }
+  recieveShot(cords) {
+    let [x, y] = cords;
+    let currentSpot = this.gameBoard[x][y];
+    if (currentSpot.hit) {
+      throw "Spot already Hit!";
+    }
+    currentSpot.hit = true;
+  }
+  checkIfShipHit(cords) {
+    let [x, y] = cords;
+    let currentSpot = this.gameBoard[x][y];
+    if (currentSpot.ship !== null) {
+      return true;
+    }
+    return false;
   }
 }

@@ -22,21 +22,44 @@ describe("Battleship GameBoard", () => {
   it("creates an empty gameBoard", () => {
     expect(testBoard.gameBoard).toMatchObject(testArr);
   });
-  it("places a ship of size 1 on the board", () => {
-    testArr[0][0] = { ship: 1 };
-    testBoard.placeShip(1, [0, 0], true);
-    expect(testBoard.gameBoard).toMatchObject(testArr);
-  });
   it("places a full size ship on the board horizontally", () => {
-    testArr[0][0] = { ship: 2 };
-    testArr[0][1] = { ship: 2 };
-    testBoard.placeShip(2, [0, 0], false);
+    testArr[0][0] = { ship: 0 };
+    testArr[0][1] = { ship: 0 };
+    testBoard.placeShip(0, [0, 0], false);
     expect(testBoard.gameBoard).toMatchObject(testArr);
   });
   it("places a full size ship on the board vertically", () => {
-    testArr[0][0] = { ship: 2 };
-    testArr[1][0] = { ship: 2 };
-    testBoard.placeShip(2, [0, 0], true);
+    testArr[0][0] = { ship: 0 };
+    testArr[1][0] = { ship: 0 };
+    testBoard.placeShip(0, [0, 0], true);
     expect(testBoard.gameBoard).toMatchObject(testArr);
   });
+  it("doesn't allow ships to be placed where they will go past the board", () => {
+    testBoard.placeShip(2, [9, 0], true);
+    expect(testBoard.gameBoard).toMatchObject(testArr);
+  });
+  it("doesn't allow ships to be placed on another ship", () => {
+    testArr[0][0] = { ship: 0 };
+    testArr[1][0] = { ship: 0 };
+    testBoard.placeShip(0, [0, 0], true);
+    testBoard.placeShip(3, [0, 0], true);
+    expect(testBoard.gameBoard).toMatchObject(testArr);
+  });
+  it("updates a cell when shot", () => {
+    testBoard.recieveShot([0, 0]);
+    expect(testBoard.gameBoard[0][0].hit).toBe(true);
+  });
+  it("doesn't allow the same cell to be hit twice", () => {
+    testBoard.recieveShot([0, 0]);
+    expect(() => testBoard.recieveShot([0, 0])).toThrow();
+  });
+  it("responds to missing a ship", () => {
+    testBoard.recieveShot([0, 0]);
+    expect(testBoard.checkIfShipHit([0,0])).toBe(false);
+  })
+  it("responds to hitting a ship", () => {
+    testBoard.placeShip(0, [0,0], true)
+    testBoard.recieveShot([0,0]);
+    expect(testBoard.checkIfShipHit([0,0])).toBe(true);
+  })
 });
