@@ -62,4 +62,11 @@ describe("Battleship GameBoard", () => {
     testBoard.recieveShot([0,0]);
     expect(testBoard.checkIfShipHit([0,0])).toBe(true);
   })
+  it("reports if there is all ships are sunk", () => {
+    testBoard.placeShip(0, [0,0],true)
+    testBoard.recieveShot([0,0]);
+    expect(testBoard.checkIfAllShipsSunk()).toBe(false)
+    testBoard.recieveShot([1,0]);
+    expect(testBoard.checkIfAllShipsSunk()).toBe(true)
+  })
 });

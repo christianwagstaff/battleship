@@ -38,14 +38,12 @@ export class GameBoard {
     if (isVertical) {
       for (let i = x; i < finalLocation; i++) {
         if (this.gameBoard[i][y].ship !== null) {
-          console.log("No Space Available");
           return false;
         }
       }
     } else {
       for (let i = y; i < finalLocation; i++) {
         if (this.gameBoard[x][i].ship !== null) {
-          console.log("No Space Available");
           return false;
         }
       }
@@ -90,5 +88,15 @@ export class GameBoard {
       return true;
     }
     return false;
+  }
+  checkIfAllShipsSunk() {
+    for (let x = 0; x < 10; x++) {
+      for (let y = 0; y < 10; y++) {
+        if (!this.gameBoard[x][y].hit && this.gameBoard[x][y].ship !== null) {
+          return false;
+        }
+      }
+    }
+    return true;
   }
 }
