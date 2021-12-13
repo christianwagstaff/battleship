@@ -55,25 +55,38 @@ describe("Battleship GameBoard", () => {
   });
   it("responds to missing a ship", () => {
     testBoard.receiveAttack([0, 0]);
-    expect(testBoard.checkIfShipHit([0,0])).toBe(false);
-  })
+    expect(testBoard.checkIfShipHit([0, 0])).toBe(false);
+  });
   it("responds to hitting a ship", () => {
-    testBoard.placeShip(0, [0,0], true)
-    testBoard.receiveAttack([0,0]);
-    expect(testBoard.checkIfShipHit([0,0])).toBe(true);
-  })
+    testBoard.placeShip(0, [0, 0], true);
+    testBoard.receiveAttack([0, 0]);
+    expect(testBoard.checkIfShipHit([0, 0])).toBe(true);
+  });
   it("reports if there is all ships are sunk", () => {
-    testBoard.placeShip(0, [0,0],true)
-    testBoard.receiveAttack([0,0]);
-    expect(testBoard.checkIfAllShipsSunk()).toBe(false)
-    testBoard.receiveAttack([1,0]);
-    expect(testBoard.checkIfAllShipsSunk()).toBe(true)
-  })
+    testBoard.placeShip(0, [0, 0], true);
+    testBoard.receiveAttack([0, 0]);
+    expect(testBoard.checkIfAllShipsSunk()).toBe(false);
+    testBoard.receiveAttack([1, 0]);
+    expect(testBoard.checkIfAllShipsSunk()).toBe(true);
+  });
   it("doesn't allow the same ship to be placed twice", () => {
-    testBoard.placeShip(0, [0,0], true)
-    testBoard.placeShip(0, [5,5], true)
+    testBoard.placeShip(0, [0, 0], true);
+    testBoard.placeShip(0, [5, 5], true);
     testArr[0][0] = { ship: 0 };
     testArr[1][0] = { ship: 0 };
     expect(testBoard.gameBoard).toMatchObject(testArr);
-  })
+  });
+  it("allows random placement of boats", () => {
+    testBoard.placeRandom();
+    console.log(testBoard.gameBoard);
+    expect(testBoard.gameBoard).toEqual(
+      expect.arrayContaining([
+        expect.arrayContaining([
+          expect.objectContaining({
+            ship: expect.any(Number),
+          }),
+        ]),
+      ])
+    );
+  });
 });

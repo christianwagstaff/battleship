@@ -15,7 +15,6 @@ function _willFitOnBoard(cords, isVertical, shipSize) {
   }
   return true;
 }
-
 function _init() {
   // creates a gameBoard with size 10 x 10
   let board = Array(10)
@@ -28,7 +27,6 @@ function _init() {
   }
   return board;
 }
-
 function _isSpaceAvailable(cords, isVertical, shipSize, board) {
   let [x, y] = cords;
   let finalLocation = isVertical ? x + shipSize : y + shipSize;
@@ -47,6 +45,15 @@ function _isSpaceAvailable(cords, isVertical, shipSize, board) {
   }
   return true;
 }
+function _randomVertical() {
+  let vert = Math.floor(Math.random() * 2);
+  return vert;
+}
+function _randomCords() {
+  const x = Math.floor(Math.random() * 10);
+  const y = Math.floor(Math.random() * 10);
+  return [x, y];
+}
 
 export class GameBoard {
   constructor() {
@@ -57,8 +64,6 @@ export class GameBoard {
   placeShip(shipNumber, cords, isVertical) {
     if (this.currentShips.includes(shipNumber)) {
       return;
-    } else {
-      this.currentShips.push(shipNumber);
     }
     let [x, y] = cords;
     let ship = shipGuide[shipNumber];
@@ -81,6 +86,8 @@ export class GameBoard {
         this.gameBoard[x][i].ship = shipNumber;
       }
     }
+    this.currentShips.push(shipNumber);
+    return true;
   }
   receiveAttack(cords) {
     let [x, y] = cords;
@@ -107,5 +114,15 @@ export class GameBoard {
       }
     }
     return true;
+  }
+  placeRandom() {
+    for (let i of Object.keys(shipGuide)) {
+      let checkingCords = true;
+      while (checkingCords) {
+        if (this.placeShip(parseInt(i), _randomCords(), _randomVertical())) {
+          checkingCords = false;
+        }
+      }
+    }
   }
 }

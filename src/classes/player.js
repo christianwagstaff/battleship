@@ -5,3 +5,10 @@ export default class Player {
     (this.name = name), (this.gameBoard = new GameBoard());
   }
 }
+
+export class Computer extends Player {
+  constructor(name) {
+    super(name);
+  }
+  
+}
