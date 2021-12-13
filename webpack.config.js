@@ -8,7 +8,7 @@ module.exports = {
     filename: "main.js",
     path: path.resolve(__dirname, "dist"),
   },
-  devtools: "source-map",
+  devtool: "source-map",
   module: {
     rules: [
       {

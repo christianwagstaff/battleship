@@ -1,4 +1,4 @@
-import { GameBoard } from "../gameBoard.js";
+import { GameBoard } from "../classes/gameBoard.js";
 function init() {
   // creates a gameBoard with size 10 x 10
   let board = Array(10)
