@@ -46,27 +46,27 @@ describe("Battleship GameBoard", () => {
     expect(testBoard.gameBoard).toMatchObject(testArr);
   });
   it("updates a cell when shot", () => {
-    testBoard.recieveShot([0, 0]);
+    testBoard.receiveAttack([0, 0]);
     expect(testBoard.gameBoard[0][0].hit).toBe(true);
   });
   it("doesn't allow the same cell to be hit twice", () => {
-    testBoard.recieveShot([0, 0]);
-    expect(() => testBoard.recieveShot([0, 0])).toThrow();
+    testBoard.receiveAttack([0, 0]);
+    expect(() => testBoard.receiveAttack([0, 0])).toThrow();
   });
   it("responds to missing a ship", () => {
-    testBoard.recieveShot([0, 0]);
+    testBoard.receiveAttack([0, 0]);
     expect(testBoard.checkIfShipHit([0,0])).toBe(false);
   })
   it("responds to hitting a ship", () => {
     testBoard.placeShip(0, [0,0], true)
-    testBoard.recieveShot([0,0]);
+    testBoard.receiveAttack([0,0]);
     expect(testBoard.checkIfShipHit([0,0])).toBe(true);
   })
   it("reports if there is all ships are sunk", () => {
     testBoard.placeShip(0, [0,0],true)
-    testBoard.recieveShot([0,0]);
+    testBoard.receiveAttack([0,0]);
     expect(testBoard.checkIfAllShipsSunk()).toBe(false)
-    testBoard.recieveShot([1,0]);
+    testBoard.receiveAttack([1,0]);
     expect(testBoard.checkIfAllShipsSunk()).toBe(true)
   })
 });

@@ -73,7 +73,7 @@ export class GameBoard {
       }
     }
   }
-  recieveShot(cords) {
+  receiveAttack(cords) {
     let [x, y] = cords;
     let currentSpot = this.gameBoard[x][y];
     if (currentSpot.hit) {
