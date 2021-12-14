@@ -77,16 +77,14 @@ export class GameBoard {
       return;
     }
     if (isVertical) {
-      //   finalLocation = x + shipSize;
       for (let i = x; i < finalLocation; i++) {
         this.gameBoard[i][y].ship = shipNumber;
-        this.shipCords[[i,y]] = shipNumber;
+        this.shipCords[[i, y]] = shipNumber;
       }
     } else {
-      //   finalLocation = y + shipSize;
       for (let i = y; i < finalLocation; i++) {
         this.gameBoard[x][i].ship = shipNumber;
-        this.shipCords[[x,i]] = shipNumber;
+        this.shipCords[[x, i]] = shipNumber;
       }
     }
     this.currentShips.push(shipNumber);
@@ -96,9 +94,10 @@ export class GameBoard {
     let [x, y] = cords;
     let currentSpot = this.gameBoard[x][y];
     if (currentSpot.hit) {
-      throw "Spot already Hit!";
+      return false;
     }
     currentSpot.hit = true;
+    return true;
   }
   checkIfShipHit(cords) {
     let [x, y] = cords;

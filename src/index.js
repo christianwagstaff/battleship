@@ -27,6 +27,7 @@ computerGameGrid.addEventListener("click", (e) => {
   let y = parseInt(target.dataset.y);
   let result = playRound(computer, [x, y]);
   target.classList.add(result);
+  checkForGameOver(computer) ? alert('Game Over'):'b';
 });
 
 computer.gameBoard.placeRandom();
@@ -52,4 +53,8 @@ function playRound(player, cords) {
   } else {
     return "miss";
   }
+}
+
+function checkForGameOver(player) {
+    return player.gameBoard.checkIfAllShipsSunk();
 }

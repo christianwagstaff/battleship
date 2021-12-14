@@ -51,7 +51,7 @@ describe("Battleship GameBoard", () => {
   });
   it("doesn't allow the same cell to be hit twice", () => {
     testBoard.receiveAttack([0, 0]);
-    expect(() => testBoard.receiveAttack([0, 0])).toThrow();
+    expect(testBoard.receiveAttack([0, 0])).toBe(false);
   });
   it("responds to missing a ship", () => {
     testBoard.receiveAttack([0, 0]);
@@ -90,9 +90,6 @@ describe("Battleship GameBoard", () => {
   });
   it("lists the cords of all ships", () => {
     testBoard.placeShip(0, [0, 0], true);
-    expect(testBoard.shipCords).toEqual([
-      [0, 0],
-      [1, 0],
-    ]);
+    expect(testBoard.shipCords).toEqual({"0,0": 0, "1,0": 0});
   });
 });
