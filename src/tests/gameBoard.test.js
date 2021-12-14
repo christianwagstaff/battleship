@@ -89,4 +89,11 @@ describe("Battleship GameBoard", () => {
       ])
     );
   });
+  it("lists the cords of all ships", () => {
+    testBoard.placeShip(0, [0, 0], true);
+    expect(testBoard.shipCords).toEqual([
+      [0, 0],
+      [1, 0],
+    ]);
+  });
 });

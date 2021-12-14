@@ -59,6 +59,7 @@ export class GameBoard {
   constructor() {
     this.gameBoard = _init();
     this.currentShips = [];
+    this.shipCords = [];
   }
 
   placeShip(shipNumber, cords, isVertical) {
@@ -79,11 +80,13 @@ export class GameBoard {
       //   finalLocation = x + shipSize;
       for (let i = x; i < finalLocation; i++) {
         this.gameBoard[i][y].ship = shipNumber;
+        this.shipCords.push([i, y]);
       }
     } else {
       //   finalLocation = y + shipSize;
       for (let i = y; i < finalLocation; i++) {
         this.gameBoard[x][i].ship = shipNumber;
+        this.shipCords.push([x, i]);
       }
     }
     this.currentShips.push(shipNumber);
