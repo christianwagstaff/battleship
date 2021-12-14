@@ -78,7 +78,6 @@ describe("Battleship GameBoard", () => {
   });
   it("allows random placement of boats", () => {
     testBoard.placeRandom();
-    console.log(testBoard.gameBoard);
     expect(testBoard.gameBoard).toEqual(
       expect.arrayContaining([
         expect.arrayContaining([

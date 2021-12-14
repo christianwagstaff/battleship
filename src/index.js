@@ -6,8 +6,8 @@ const main = document.createElement("main");
 body.appendChild(main);
 
 const Header = header();
-const computerGameGrid = gameGrid();
-const playerGameGrid = gameGrid();
+const computerGameGrid = gameGrid('computer');
+const playerGameGrid = gameGrid('player1');
 const computer = new Player("computer");
 const player1 = new Player("Player 1");
 
